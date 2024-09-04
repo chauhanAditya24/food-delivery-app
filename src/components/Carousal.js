@@ -2,12 +2,6 @@ import React, { useState } from "react";
 
 const Carousal = () => {
 
-    const [search, setSearch] = useState('')
-
-    const handleChange = (e) => {
-        setSearch(e.target.value)
-    }
-
     return (
         <div>
             <div>
