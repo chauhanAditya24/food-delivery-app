@@ -1,0 +1,5 @@
+.carousal-image{
+    object-fit: contain !important;
+    filter: brightness(30%);
+    width: 100%;
+}
