@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
 
 const Signup = () => {
 
@@ -32,8 +33,10 @@ const Signup = () => {
 
     return (
         <>
-            {/* <NavBar /> */}
-            <div className="container">
+            <div>
+                <NavBar />
+            </div>
+            <div className="container mt-3">
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
                         <label for="name" className="form-label">Name</label>
@@ -59,8 +62,10 @@ const Signup = () => {
                     <button type="submit" className="btn btn-success">Submit</button>
                     <Link to='/login' className='m-3 btn btn-danger '>Already a user</Link>
                 </form>
+            </div>
 
-
+            <div>
+                <Footer/>
             </div>
         </>
     )

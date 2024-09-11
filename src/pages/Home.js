@@ -6,6 +6,8 @@ import NavBar from "../components/NavBar"
 
 const Home = () => {
 
+    // console.log('local Item' , localStorage.getItem('ren'))
+    // let login = false
     const [foodCat, setFoodCat] = useState([])
     const [foodItem, setFoodItem] = useState([])
 
@@ -35,6 +37,11 @@ const Home = () => {
 
     useEffect(() => {
         loadData()
+        // if(!localStorage.getItem('login')){
+        //     login = false
+        // }else{
+        //     login = true
+        // }
     }, [])
 
     return (
@@ -57,13 +64,13 @@ const Home = () => {
                     </div>
 
                     <div className="carousel-item active">
-                        <img src='https://picsum.photos/200/300' className="d-block w-100" alt="1" style={{ filter: 'brightness(30%)' }} />
+                        <img src='https://images.unsplash.com/photo-1603133872878-684f208fb84b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y2hpY2tlbiUyMGZyaWVkJTIwcmljZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60' className="d-block w-100" alt="1" style={{ filter: 'brightness(30%)' }} />
                     </div>
                     <div className="carousel-item">
-                        <img src="https://picsum.photos/id/237/200/300" className="d-block w-100" alt="2" style={{ filter: 'brightness(30%)' }} />
+                        <img src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y2hpY2tlbiUyMHRpa2thfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" className="d-block w-100" alt="2" style={{ filter: 'brightness(30%)' }} />
                     </div>
                     <div className="carousel-item">
-                        <img src="https://picsum.photos/id/27/200/300" className="d-block w-100" alt="3" style={{ filter: 'brightness(30%)' }} />
+                        <img src="https://media.istockphoto.com/photos/chinese-food-veg-pizza-picture-id1341905237?k=20&m=1341905237&s=612x612&w=0&h=Lbuza1Ig5cC1PwQhqTsq-Uac8hg1W-V0Wx4d4lqDeB0=" className="d-block w-100" alt="3" style={{ filter: 'brightness(30%)' }} />
                     </div>
                 </div>
                 <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
@@ -94,9 +101,10 @@ const Home = () => {
                                                 return (
                                                     <div key={ele._id} className="col-12 col-md-6 col-lg-3">
                                                         <Card
-                                                            foodName={ele.name}
+                                                            foodItem = {ele}
+                                                            // foodName={ele.name}
                                                             options={ele.options[0]}
-                                                            img={ele.img}
+                                                            // img={ele.img}
                                                         />
                                                     </div>
                                                 )
