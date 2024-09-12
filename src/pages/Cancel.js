@@ -16,7 +16,7 @@ const Cancel = (props) => {
         }
 
         setTimeout(() => {
-            props.history.push('/')
+            props.history.push('/   ')
         }, 7000)
     } , [props.history,location])
 
