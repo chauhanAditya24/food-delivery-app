@@ -9,9 +9,12 @@ import Login from "./pages/Login.js";
 import { CartProvider } from "./components/ContextReducer.js";
 import MyOrder from "./pages/MyOrder.js";
 
+import { Elements } from "@stripe/react-stripe-js"
+import { loadStripe } from "@stripe/stripe-js";
+import Success from "./pages/Success.js";
+import Cancel from "./pages/Cancel.js";
+
 const App = () => {
-
-
 
   return (
     <CartProvider>
@@ -23,6 +26,8 @@ const App = () => {
         <Route path='/register' component={Signup} exact={true} />
         <Route path='/login' component={Login} exact={true} />
         <Route path='/myOrder' component={MyOrder} exact={true} />
+        <Route path='/success' component={Success} exact={true} />
+        <Route path='/cancel' component={Cancel} exact={true} />
       </div>
     </CartProvider>
   )

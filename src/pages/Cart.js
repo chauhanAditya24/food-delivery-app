@@ -1,5 +1,8 @@
 import React from "react";
 import { useCart, useDispatchCart } from "../components/ContextReducer";
+
+import { loadStripe } from "@stripe/stripe-js";
+
 const Cart = () => {
 
     let data = useCart();
@@ -15,21 +18,49 @@ const Cart = () => {
     let totalPrice = data.reduce((total, food) => total + food.price, 0)
 
     const handleCheckOut = async() => {
+
+        const stripe = await loadStripe('pk_test_51OPQrWSCsP2MbOhT82Il1vqqebcmSAweSnxmleh4UrBZwIfdo7IVvXh92Ju10pt3uFhSU6c4wmNwMbFxDczfdwR500zPvhV4Kc')
+
         const userEmail = localStorage.getItem('email')
-        let respone = await fetch('http://localhost:3066/fda/orderData' , {
-            method: 'POST',
+
+        let respone = await fetch('http://localhost:3066/fda/checkout' , {
+            method:'POST',
             headers:{
-                'Content-Type': 'application/json'
+                'Content-Type' : 'application/json'
             },
-            body:JSON.stringify({
-                order_data: data,
+            body: JSON.stringify({
+                order_data : data,
                 email:userEmail,
-                order_date : new Date().toDateString()
             })
         })
 
-        if(respone.status === 200){
-            dispatch({ type: 'DROP'})
+        // const result = await respone.json()
+        // console.log("response from backend" , result)
+
+        // let respone = await fetch('http://localhost:3066/fda/orderData' , {
+        //     method: 'POST',
+        //     headers:{
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body:JSON.stringify({
+        //         order_data: data,
+        //         email:userEmail,
+        //         order_date : new Date().toDateString()
+        //     })
+        // })
+
+        const session = await respone.json()
+
+        const result = await stripe.redirectToCheckout({
+            sessionId: session.id
+        })
+
+        // if(respone.status === 200){
+        //     dispatch({ type: 'DROP'})
+        // }
+
+        if(result.error){
+            console.log(result.error);
         }
 
     }

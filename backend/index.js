@@ -14,6 +14,8 @@ app.use(routerData)
 app.use(orderRouter)
 // console.log('porecc env' , process.env.PORT)
 
+const stripe = require('stripe')(process.env.STRIPE_SECRET)
+
 configureDB()
 
 const PORT = process.env.PORT || 3066
