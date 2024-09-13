@@ -18,7 +18,7 @@ userCltr.login = async (req, res) => {
             if(result){
                 const tokenData = { id: user._id}
                 const token = jwt.sign(tokenData,process.env.JWT_SECRET)
-                res.status(200).json({success:true , token: `Bearer ${token}`})
+                res.status(200).json({success:true , token: `Bearer ${token}` , email:body.email })
             }else{
                 res.status(400).json({error:'wrong credentials'})
             }

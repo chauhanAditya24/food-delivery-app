@@ -9,7 +9,7 @@ const Success = (props) => {
     const location = new useLocation()
     const [orderData, setOrderData] = useState([])
     const [email, setEmail] = useState('')
-    
+
     let dispatch = useDispatchCart();
 
     useEffect(() => {
@@ -17,16 +17,23 @@ const Success = (props) => {
         const fetchOrderData = async () => {
             const searchParams = new URLSearchParams(location.search);
             const orderDataParam = searchParams.get('order_data');
+            // console.log('order decoded data' , orderDataParam)
             const emailParam = searchParams.get('email');
-
-            if(emailParam){
-                localStorage.setItem('email')
+            console.log('emial PAram ' , emailParam)
+            if (emailParam) {
+                const decodedEmail = decodeURIComponent(emailParam);
+                console.log('Email from success:', decodedEmail);
+                localStorage.setItem('email', decodedEmail); // Store the decoded email
+                setEmail(decodedEmail); // Set the email in state
+            } else {
+                console.error('Email parameter not found in URL');
             }
 
             if (orderDataParam && emailParam) {
                 const decodedOrderData = JSON.parse(decodeURIComponent(orderDataParam));
                 setOrderData(decodedOrderData);
-                setEmail(decodeURIComponent(emailParam));
+                const decodedEmail = JSON.parse(decodeURIComponent(emailParam))
+                setEmail(emailParam)
 
                 try {
                     let response = await fetch('http://localhost:3066/fda/orderData', {
@@ -36,14 +43,17 @@ const Success = (props) => {
                         },
                         body: JSON.stringify({
                             order_data: decodedOrderData, // Use decodedOrderData from state
-                            email: decodeURIComponent(emailParam), // Use decoded email from state
+                            email: decodedEmail, // Use decoded email from state
                             order_date: new Date().toDateString(),
                         }),
                     });
 
                     if (response.status === 200) {
-                        // If using a state management system, dispatch the action to clear the cart here
-                        dispatch({ type: 'DROP' })
+                        // Dispatch the action to clear the cart here
+                        dispatch({ type: 'DROP' });
+                        localStorage.removeItem('email')
+                        localStorage.removeItem('token')
+                        props.history.push('/')
                     }
                 } catch (error) {
                     console.error('Failed to send order data:', error);
@@ -52,7 +62,7 @@ const Success = (props) => {
         };
 
         fetchOrderData(); // Call the async function
-    }, [location.search]);
+    }, [location.search, dispatch]);
 
     return (
         <>

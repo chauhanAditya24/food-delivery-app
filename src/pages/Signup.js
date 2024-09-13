@@ -24,10 +24,13 @@ const Signup = () => {
 
         const json = await response.json()
 
-        console.log('respone', json)
+        console.log('respone', json.sucess)
 
-        if (!json.success) {
-            alert('something went wrong')
+        if (json.sucess) {
+            alert('successfully registered')
+            setData({ email: "", password: "", name: "", location: "" })
+        }else{
+            alert('something wrong')
         }
     }
 
@@ -54,7 +57,7 @@ const Signup = () => {
                         />
                     </div>
                     <div className="mb-3">
-                        <label for="exampleInputPassword1" className="form-label">Location</label>
+                        <label for="exampleInputPassword1" className="form-label">Address</label>
                         <input type="text" class="form-control"
                             name="location" value={data.location} onChange={handelChange}
                         />

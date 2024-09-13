@@ -2,11 +2,14 @@ import React, { useState } from "react"
 import { Link } from "react-router-dom/cjs/react-router-dom.min"
 import NavBar from "../components/NavBar"
 import Footer from "../components/Footer"
+import { useToast } from "@chakra-ui/react"
 
 const Login = (props) => {
 
 
     const [data, setData] = useState({ email: "", password: "" })
+
+    const toast = useToast()
 
     const handelChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value })
@@ -25,15 +28,16 @@ const Login = (props) => {
 
         const json = await response.json()
 
-        // console.log('respone', json)
+        console.log('respone', json)
 
         if (!json.success) {
-            alert('something went wrong')
+            alert('Please check your email/password')
         } else {
             localStorage.setItem('email', json.email)
             localStorage.setItem('token', json.token)
-            localStorage.setItem('login' , true)
+            localStorage.setItem('login', true)
             props.history.push('/')
+
         }
     }
 
@@ -52,7 +56,7 @@ const Login = (props) => {
                     </div>
                     <div className="mb-3">
                         <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1"
+                        <input type="password" className="form-control" id="exampleInputPassword1"
                             name="password" value={data.password} onChange={handelChange}
                         />
                     </div>

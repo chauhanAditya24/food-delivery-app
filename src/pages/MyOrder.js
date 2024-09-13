@@ -4,29 +4,55 @@ import Footer from "../components/Footer"
 
 const MyOrder = () => {
 
-    const [orderData, setorderData] = useState({})
+    const [orderData, setOrderData] = useState({})
 
     const fetchMyOrder = async () => {
-        console.log(localStorage.getItem('email'))
+        const email = localStorage.getItem("email");
+        if (!email) return; // Ensure the email exists before proceeding
+        console.log(email);
         await fetch("http://localhost:3066/fda/myOrder", {
-            method: 'POST',
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json'
+                "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                email: localStorage.getItem('email')
-            })
-        }).then(async (res) => {
-            let response = await res.json()
-            await setorderData(response)
+            body: JSON.stringify({ email }),
         })
-
-
-    }
+            .then(async (res) => {
+                const response = await res.json();
+                console.log('response in  my order', response)
+                setOrderData(response); // No need for `await` here
+            })
+            .catch((err) => {
+                console.error("Error fetching orders: ", err);
+            });
+    };
 
     useEffect(() => {
         fetchMyOrder()
-    }, [])
+    }, []);
+
+
+    // const fetchMyOrder = async () => {
+    //     console.log(localStorage.getItem('email'))
+    //     await fetch("http://localhost:3066/fda/myOrder", {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify({
+    //             email: localStorage.getItem('email')
+    //         })
+    //     }).then(async (res) => {
+    //         let response = await res.json()
+    //         await setorderData(response)
+    //     })
+
+
+    // }
+
+    // useEffect(() => {
+    //     fetchMyOrder()
+    // }, [])
 
     return (
         <div>

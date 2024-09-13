@@ -22,7 +22,8 @@ const Cart = () => {
         const stripe = await loadStripe('pk_test_51OPQrWSCsP2MbOhT82Il1vqqebcmSAweSnxmleh4UrBZwIfdo7IVvXh92Ju10pt3uFhSU6c4wmNwMbFxDczfdwR500zPvhV4Kc')
 
         const userEmail = localStorage.getItem('email')
-
+        console.log('email in local storage' , userEmail)
+        
         let respone = await fetch('http://localhost:3066/fda/checkout' , {
             method:'POST',
             headers:{

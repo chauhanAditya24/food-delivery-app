@@ -11,12 +11,13 @@ const Cancel = (props) => {
 
         const searchParams = new URLSearchParams(location.search)
         const email = searchParams.get('email')
+        console.log('email decoded ' , email)
         if(email){
-            localStorage.setItem('email')
+            localStorage.setItem('email',email)
         }
 
         setTimeout(() => {
-            props.history.push('/   ')
+            props.history.push('/')
         }, 7000)
     } , [props.history,location])
 
